@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -16,11 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Interfaces\HeadersInterface;
-
-use function is_integer;
-use function is_object;
-use function is_string;
-use function method_exists;
 
 class Response extends Message implements ResponseInterface
 {
@@ -124,7 +118,7 @@ class Response extends Message implements ResponseInterface
         ?StreamInterface $body = null
     ) {
         $this->status = $this->filterStatus($status);
-        $this->headers = $headers ? $headers : new Headers([], []);
+        $this->headers = $headers ? $headers : new Headers();
         $this->body = $body ? $body : (new StreamFactory())->createStream();
     }
 

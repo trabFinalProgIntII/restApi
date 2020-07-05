@@ -25,13 +25,12 @@ final class RouteContext
         $route = $serverRequest->getAttribute('route');
         $routeParser = $serverRequest->getAttribute('routeParser');
         $routingResults = $serverRequest->getAttribute('routingResults');
-        $basePath = $serverRequest->getAttribute('basePath');
 
         if ($routeParser === null || $routingResults === null) {
             throw new RuntimeException('Cannot create RouteContext before routing has been completed');
         }
 
-        return new self($route, $routeParser, $routingResults, $basePath);
+        return new self($route, $routeParser, $routingResults);
     }
 
     /**
@@ -50,26 +49,18 @@ final class RouteContext
     private $routingResults;
 
     /**
-     * @var string|null
-     */
-    private $basePath;
-
-    /**
      * @param RouteInterface|null  $route
      * @param RouteParserInterface $routeParser
      * @param RoutingResults       $routingResults
-     * @param string|null          $basePath
      */
     private function __construct(
         ?RouteInterface $route,
         RouteParserInterface $routeParser,
-        RoutingResults $routingResults,
-        ?string $basePath = null
+        RoutingResults $routingResults
     ) {
         $this->route = $route;
         $this->routeParser = $routeParser;
         $this->routingResults = $routingResults;
-        $this->basePath = $basePath;
     }
 
     /**
@@ -94,16 +85,5 @@ final class RouteContext
     public function getRoutingResults(): RoutingResults
     {
         return $this->routingResults;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBasePath(): string
-    {
-        if ($this->basePath === null) {
-            throw new RuntimeException('No base path defined.');
-        }
-        return $this->basePath;
     }
 }

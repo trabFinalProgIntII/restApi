@@ -34,7 +34,7 @@ class App extends RouteCollectorProxy implements RequestHandlerInterface
      *
      * @var string
      */
-    public const VERSION = '4.3.0';
+    public const VERSION = '4.2.0';
 
     /**
      * @var RouteResolverInterface
@@ -70,7 +70,7 @@ class App extends RouteCollectorProxy implements RequestHandlerInterface
         );
 
         $this->routeResolver = $routeResolver ?? new RouteResolver($this->routeCollector);
-        $routeRunner = new RouteRunner($this->routeResolver, $this->routeCollector->getRouteParser(), $this);
+        $routeRunner = new RouteRunner($this->routeResolver, $this->routeCollector->getRouteParser());
 
         if (!$middlewareDispatcher) {
             $middlewareDispatcher = new MiddlewareDispatcher($routeRunner, $this->callableResolver, $container);
@@ -119,8 +119,6 @@ class App extends RouteCollectorProxy implements RequestHandlerInterface
 
     /**
      * Add the Slim built-in routing middleware to the app middleware stack
-     *
-     * This method can be used to control middleware order and is not required for default routing operation.
      *
      * @return RoutingMiddleware
      */

@@ -4,12 +4,14 @@ use Slim\Factory\AppFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-include_once('.php');
-include_once('.php');
+
+include_once('LojaController.php');
+include_once('ProdutoController.php');
 
 require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
 
 $app->group('/api/lojas', function($app){
     $app->get('', 'LojaController:listar');

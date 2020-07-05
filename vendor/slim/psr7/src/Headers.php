@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -12,19 +11,6 @@ namespace Slim\Psr7;
 
 use InvalidArgumentException;
 use Slim\Psr7\Interfaces\HeadersInterface;
-
-use function base64_encode;
-use function function_exists;
-use function getallheaders;
-use function is_array;
-use function is_numeric;
-use function is_string;
-use function preg_match;
-use function strpos;
-use function strtolower;
-use function strtr;
-use function substr;
-use function trim;
 
 class Headers implements HeadersInterface
 {
@@ -42,7 +28,7 @@ class Headers implements HeadersInterface
      * @param array $headers
      * @param array $globals
      */
-    final public function __construct(array $headers = [], ?array $globals = null)
+    public function __construct(array $headers = [], ?array $globals = null)
     {
         $this->globals = $globals ?? $_SERVER;
         $this->setHeaders($headers);
@@ -248,7 +234,7 @@ class Headers implements HeadersInterface
      *
      * @throws InvalidArgumentException;
      */
-    protected function validateHeader($name, $value): void
+    protected function validateHeader($name, $value)
     {
         $this->validateHeaderName($name);
         $this->validateHeaderValue($value);
@@ -259,7 +245,7 @@ class Headers implements HeadersInterface
      *
      * @throws InvalidArgumentException
      */
-    protected function validateHeaderName($name): void
+    protected function validateHeaderName($name)
     {
         if (!is_string($name) || preg_match("@^[!#$%&'*+.^_`|~0-9A-Za-z-]+$@", $name) !== 1) {
             throw new InvalidArgumentException('Header name must be an RFC 7230 compatible string.');
@@ -271,7 +257,7 @@ class Headers implements HeadersInterface
      *
      * @throws InvalidArgumentException
      */
-    protected function validateHeaderValue($value): void
+    protected function validateHeaderValue($value)
     {
         $items = is_array($value) ? $value : [$value];
 

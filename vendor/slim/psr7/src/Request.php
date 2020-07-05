@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -16,18 +15,6 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Slim\Psr7\Interfaces\HeadersInterface;
-
-use function get_class;
-use function gettype;
-use function is_array;
-use function is_null;
-use function is_object;
-use function is_string;
-use function ltrim;
-use function parse_str;
-use function preg_match;
-use function sprintf;
-use function str_replace;
 
 class Request extends Message implements ServerRequestInterface
 {
@@ -47,7 +34,7 @@ class Request extends Message implements ServerRequestInterface
     protected $requestTarget;
 
     /**
-     * @var ?array
+     * @var array
      */
     protected $queryParams;
 
@@ -154,7 +141,6 @@ class Request extends Message implements ServerRequestInterface
      */
     protected function filterMethod($method): string
     {
-        /** @var mixed $method */
         if (!is_string($method)) {
             throw new InvalidArgumentException(sprintf(
                 'Unsupported HTTP method; must be a string, received %s',
@@ -275,7 +261,6 @@ class Request extends Message implements ServerRequestInterface
         }
 
         parse_str($this->uri->getQuery(), $this->queryParams); // <-- URL decodes data
-        assert(is_array($this->queryParams));
 
         return $this->queryParams;
     }
@@ -370,7 +355,6 @@ class Request extends Message implements ServerRequestInterface
      */
     public function withParsedBody($data)
     {
-        /** @var mixed $data */
         if (!is_null($data) && !is_object($data) && !is_array($data)) {
             throw new InvalidArgumentException('Parsed body value must be an array, an object, or null');
         }

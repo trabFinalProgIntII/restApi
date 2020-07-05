@@ -179,7 +179,7 @@ class RouteCollector implements RouteCollectorInterface
     }
 
     /**
-     * Set the base path used in urlFor()
+     * Set the base path used in pathFor()
      *
      * @param string $basePath
      *
@@ -262,6 +262,7 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function map(array $methods, string $pattern, $handler): RouteInterface
     {
+
         $route = $this->createRoute($methods, $pattern, $handler);
         $this->routes[$route->getIdentifier()] = $route;
         $this->routeCounter++;

@@ -15,4 +15,4 @@ CREATE TABLE produtos (
     PRIMARY KEY(id),
     CONSTRAINT fk_produtos_loja_id_lojas_id
 		FOREIGN KEY (loja_id) REFERENCES lojas(id)
-);
+)

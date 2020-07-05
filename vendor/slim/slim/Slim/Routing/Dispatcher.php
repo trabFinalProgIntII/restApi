@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Slim\Routing;
 
-use FastRoute\RouteCollector as FastRouteCollector;
+use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use Slim\Interfaces\DispatcherInterface;
 use Slim\Interfaces\RouteCollectorInterface;
@@ -37,11 +37,9 @@ class Dispatcher implements DispatcherInterface
             return $this->dispatcher;
         }
 
-        $routeDefinitionCallback = function (FastRouteCollector $r) {
-            $basePath = $this->routeCollector->getBasePath();
-
+        $routeDefinitionCallback = function (RouteCollector $r) {
             foreach ($this->routeCollector->getRoutes() as $route) {
-                $r->addRoute($route->getMethods(), $basePath . $route->getPattern(), $route->getIdentifier());
+                $r->addRoute($route->getMethods(), $route->getPattern(), $route->getIdentifier());
             }
         };
 

@@ -9,8 +9,10 @@ class LojaController {
         $dao= new LojaDAO;    
         $Lojas = $dao->listar();
     
-        return $response->withJSON($Lojas);
-    
+       $response = $response->withJson($Lojas);
+       $response = $response->WithStatus(200);
+       return $response;
+       
     }
 
     public function inserir($request, $response, $args) {
@@ -19,8 +21,9 @@ class LojaController {
     
         $dao = new LojaDAO;
         $Loja = $dao->inserir($Loja);
-    
-        return $response->withJson($Loja,201);
+        $response = $response->withJson($Loja);
+        $response = $response->WithStatus(201);
+        return $response;
     }
 
     public function buscarPorId($request, $response, $args) {

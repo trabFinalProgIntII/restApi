@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -15,10 +14,6 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Psr7\UploadedFile;
-
-use function is_string;
-
-use const UPLOAD_ERR_OK;
 
 class UploadedFileFactory implements UploadedFileFactoryInterface
 {

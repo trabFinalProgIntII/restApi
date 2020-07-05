@@ -48,10 +48,7 @@ class RouteResolver implements RouteResolverInterface
      */
     public function computeRoutingResults(string $uri, string $method): RoutingResults
     {
-        $uri = rawurldecode($uri);
-        if ($uri === '' || $uri[0] !== '/') {
-            $uri = '/' . $uri;
-        }
+        $uri = '/' . ltrim(rawurldecode($uri), '/');
         return $this->dispatcher->dispatch($method, $uri);
     }
 

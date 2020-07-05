@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -14,24 +13,6 @@ use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
-use function fclose;
-use function feof;
-use function fread;
-use function fseek;
-use function fstat;
-use function ftell;
-use function fwrite;
-use function is_array;
-use function is_resource;
-use function is_string;
-use function pclose;
-use function rewind;
-use function stream_get_contents;
-use function stream_get_meta_data;
-use function strstr;
-
-use const SEEK_SET;
-
 class Stream implements StreamInterface
 {
     /**
@@ -39,7 +20,7 @@ class Stream implements StreamInterface
      *
      * This is octal as per header stat.h
      */
-    public const FSTAT_MODE_S_IFIFO = 0010000;
+    const FSTAT_MODE_S_IFIFO = 0010000;
 
     /**
      * The underlying stream resource
@@ -81,7 +62,7 @@ class Stream implements StreamInterface
     /**
      * @var bool
      */
-    protected $finished = false;
+    protected $finished;
 
     /**
      * @var StreamInterface | null
@@ -160,9 +141,6 @@ class Stream implements StreamInterface
         $this->size = null;
         $this->isPipe = null;
 
-        $this->cache = null;
-        $this->finished = false;
-
         return $oldResource;
     }
 
@@ -174,14 +152,18 @@ class Stream implements StreamInterface
         if (!$this->stream) {
             return '';
         }
+
         if ($this->cache && $this->finished) {
             $this->cache->rewind();
             return $this->cache->getContents();
         }
-        if ($this->isSeekable()) {
+
+        try {
             $this->rewind();
+            return $this->getContents();
+        } catch (RuntimeException $e) {
+            return '';
         }
-        return $this->getContents();
     }
 
     /**
@@ -207,10 +189,7 @@ class Stream implements StreamInterface
     {
         if ($this->stream && !$this->size) {
             $stats = fstat($this->stream);
-
-            if ($stats) {
-                $this->size = isset($stats['size']) && !$this->isPipe() ? $stats['size'] : null;
-            }
+            $this->size = isset($stats['size']) && !$this->isPipe() ? $stats['size'] : null;
         }
 
         return $this->size;
@@ -329,7 +308,7 @@ class Stream implements StreamInterface
     {
         $data = false;
 
-        if ($this->isReadable() && $this->stream) {
+        if ($this->stream) {
             $data = fread($this->stream, $length);
         }
 
@@ -353,7 +332,7 @@ class Stream implements StreamInterface
     {
         $written = false;
 
-        if ($this->isWritable() && $this->stream) {
+        if ($this->stream) {
             $written = fwrite($this->stream, $string);
         }
 
@@ -407,11 +386,7 @@ class Stream implements StreamInterface
             $this->isPipe = false;
 
             if ($this->stream) {
-                $stats = fstat($this->stream);
-
-                if (is_array($stats)) {
-                    $this->isPipe = isset($stats['mode']) && ($stats['mode'] & self::FSTAT_MODE_S_IFIFO) !== 0;
-                }
+                $this->isPipe = (fstat($this->stream)['mode'] & self::FSTAT_MODE_S_IFIFO) !== 0;
             }
         }
 

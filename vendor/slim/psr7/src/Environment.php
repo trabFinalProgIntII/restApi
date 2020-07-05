@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -10,10 +9,6 @@ declare(strict_types=1);
 
 namespace Slim\Psr7;
 
-use function array_merge;
-use function microtime;
-use function time;
-
 class Environment
 {
     /**
@@ -23,8 +18,7 @@ class Environment
      */
     public static function mock(array $data = []): array
     {
-        if (
-            (isset($data['HTTPS']) && $data['HTTPS'] !== 'off')
+        if ((isset($data['HTTPS']) && $data['HTTPS'] !== 'off')
             || ((isset($data['REQUEST_SCHEME']) && $data['REQUEST_SCHEME'] === 'https'))
         ) {
             $scheme = 'https';

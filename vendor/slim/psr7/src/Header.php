@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -11,10 +10,6 @@ declare(strict_types=1);
 namespace Slim\Psr7;
 
 use InvalidArgumentException;
-
-use function array_merge;
-use function is_array;
-use function is_string;
 
 class Header
 {

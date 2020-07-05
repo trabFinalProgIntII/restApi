@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -15,20 +14,6 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use RuntimeException;
 use Slim\Psr7\Factory\StreamFactory;
-
-use function copy;
-use function dirname;
-use function is_array;
-use function is_string;
-use function is_uploaded_file;
-use function is_writable;
-use function move_uploaded_file;
-use function rename;
-use function sprintf;
-use function strpos;
-use function unlink;
-
-use const UPLOAD_ERR_OK;
 
 class UploadedFile implements UploadedFileInterface
 {
@@ -93,7 +78,7 @@ class UploadedFile implements UploadedFileInterface
      * @param int                    $error            The UPLOAD_ERR_XXX code representing the status of the upload.
      * @param bool                   $sapi             Indicates if the upload is in a SAPI environment.
      */
-    final public function __construct(
+    public function __construct(
         $fileNameOrStream,
         ?string $name = null,
         ?string $type = null,
@@ -140,8 +125,10 @@ class UploadedFile implements UploadedFileInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
-    public function moveTo($targetPath): void
+    public function moveTo($targetPath)
     {
         if ($this->moved) {
             throw new RuntimeException('Uploaded file already moved');
@@ -175,6 +162,8 @@ class UploadedFile implements UploadedFileInterface
         }
 
         $this->moved = true;
+
+        return $this;
     }
 
     /**

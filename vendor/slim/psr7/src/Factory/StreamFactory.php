@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -15,14 +14,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use Slim\Psr7\Stream;
-
-use function fopen;
-use function fwrite;
-use function is_resource;
-use function restore_error_handler;
-use function rewind;
-use function set_error_handler;
-use function sprintf;
 
 class StreamFactory implements StreamFactoryInterface
 {
@@ -53,26 +44,7 @@ class StreamFactory implements StreamFactoryInterface
         string $mode = 'r',
         StreamInterface $cache = null
     ): StreamInterface {
-        // When fopen fails, PHP normally raises a warning. Add an error
-        // handler to check for errors and throw an exception instead.
-        $exc = null;
-
-        set_error_handler(function (int $errno, string $errstr) use ($filename, $mode, &$exc) {
-            $exc = new RuntimeException(sprintf(
-                'Unable to open %s using mode %s: %s',
-                $filename,
-                $mode,
-                $errstr
-            ));
-        });
-
         $resource = fopen($filename, $mode);
-        restore_error_handler();
-
-        if ($exc) {
-            /** @var RuntimeException $exc */
-            throw $exc;
-        }
 
         if (!is_resource($resource)) {
             throw new RuntimeException(

@@ -6,7 +6,7 @@
         public static function getConexao()
         {
             if(!isset($pdo)){
-                $conexao = "mysql:host=127.0.0.1;dbname=apirest";
+                $conexao = "mysql:host=localhost;dbname=apirest";
                 $usuario = "root";
                 $senha = "";
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -14,12 +13,6 @@ use InvalidArgumentException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 use Slim\Psr7\Interfaces\HeadersInterface;
-
-use function array_keys;
-use function header;
-use function header_remove;
-use function implode;
-use function sprintf;
 
 abstract class Message implements MessageInterface
 {

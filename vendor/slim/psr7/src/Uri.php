@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Slim Framework (https://slimframework.com)
  *
@@ -12,21 +11,6 @@ namespace Slim\Psr7;
 
 use InvalidArgumentException;
 use Psr\Http\Message\UriInterface;
-
-use function filter_var;
-use function is_integer;
-use function is_null;
-use function is_object;
-use function is_string;
-use function ltrim;
-use function method_exists;
-use function preg_replace_callback;
-use function rawurlencode;
-use function str_replace;
-use function strtolower;
-
-use const FILTER_FLAG_IPV6;
-use const FILTER_VALIDATE_IP;
 
 class Uri implements UriInterface
 {
