@@ -35,7 +35,7 @@ class LojaController{
     
     salvar(event){        
         event.preventDefault();
-        var loja = this.formMarcas.getDataLoja();        
+        var loja = this.formLojas.getDataLoja();        
         console.log("Loja", loja);
 
         this.salvarLoja(loja);
@@ -48,20 +48,20 @@ class LojaController{
         const sucesso = function(lojaCriado) {
             console.log("loja Criada",lojaCriado);
             self.carregaLojas();
-            self.formMarcas.limparFormulario();
+            self.formLojas.limparFormulario();
         }
 
         const trataErro = function(statusCode) {
             console.log("Erro:",statusCode);
         }
                 
-        this.marcaService.enviarLoja(loja, sucesso, trataErro);    
+        this.lojaService.enviarLoja(loja, sucesso, trataErro);    
 
     }
 
     deletarLoja(id, event){
         const self = this;
-        this.marcaService.deletarLoja(id, 
+        this.lojaService.deletarLoja(id, 
             function() {
                 self.carregaLojas();
             },
@@ -81,21 +81,20 @@ class LojaController{
         const erro = function(status){
             console.log(status);
         }
-
-        this.lojaService.buscarLojas(id,ok,erro);   
+        this.lojaService.buscarLojaPorId(id,ok,erro);   
     }
 
     editar(id,event){
         event.preventDefault();
     
-        let marca = this.formMarcas.getDataLoja();
+        let loja = this.formLojas.getDataLoja();
         
         const self = this;
 
-        this.lojaService.atualizarLoja(id,marca, 
+        this.lojaService.atualizarLoja(id,loja, 
             function() {
                 self.formLojas.limparFormulario();
-                self.carregarLojas();
+                self.carregaLojas();
             },
             function(status) {
                 console.log(status);

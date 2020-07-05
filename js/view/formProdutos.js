@@ -10,17 +10,18 @@ class FormProdutos {
             produto = new Produto();
         }
         var str = `
-        <h2>Formulario de Produtos</h2>
-        <form id="formulario">
+        <h2>Formulário de Produtos</h2>
+        <form id="formulario" class="form_contact">
+        <div class="user_info">
             <input type="hidden" id="idProduto" value="${produto.id}" />
-            <label for="txtnome">Nome:</label>
-            <input type="text" id="txtnome" value="${produto.nome ?produto.nome :''}">
-            <br />
-            <label for="txtpreco">Preço:</label>
-            <input type="text" id="txtpreco" value="${produto.preco ?produto.preco :''}">
-            <br />
-            <label for="valLoja">Marca:</label>
-            <select id="valLoja">
+                <label for="txtnome">Nome: *</label>
+                <input type="text" required="" id="txtnome" value="${produto.nome ?produto.nome :''}">
+                <br />
+                <label for="txtpreco">Preço: *</label>
+                <input type="text" id="txtpreco" required="" value="${produto.preco ?produto.preco :''}">
+                <br />
+                <label for="valLoja">Loja:</label>
+                <select id="valLoja">
         `;
 
         for(const loja of lojas){
@@ -34,6 +35,7 @@ class FormProdutos {
             <input type="submit" id="btnsalvar" value="Salvar">
             <input type="reset" value="Cancelar">
             <br />
+            </div>
         </form>
         `;
 

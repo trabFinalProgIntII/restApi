@@ -15,9 +15,9 @@ class ProdutoController{
 
         const self = this;
         this.lojaService.buscarLojas(
-            function(marcas) 
+            function(lojas) 
             { 
-                self.formProdutos.montarForm(marcas); 
+                self.formProdutos.montarForm(lojas); 
             },
             function(statusCode) {
                 console.log("Erro - status:",statusCode);
@@ -39,6 +39,19 @@ class ProdutoController{
         this.produtoService.buscarProdutos(sucesso, trataErro);
     }
 
+    buscarProdutoId(id, event){
+        event.preventDefault();             
+        
+        const self = this;
+        const ok = function(produto){
+            self.formProdutos.montarForm(produto);
+        }
+        const erro = function(status){
+            console.log(status);
+        }
+        this.produtoService.buscarProdutoId(id,ok,erro);   
+    }
+
     limpar(event){
         event.preventDefault();
         this.formProdutos.limparFormulario();
@@ -48,7 +61,7 @@ class ProdutoController{
     salvar(event){        
         event.preventDefault();
         var produto = this.formProdutos.getDataProduto();        
-        console.log("Produto", produto);
+        //console.log("Produto", produto);
 
         this.salvarProduto(produto);
 
@@ -58,7 +71,7 @@ class ProdutoController{
         const self = this;
 
         const sucesso = function(produtoCriado) {
-            console.log("Produto Criado",produtoCriado);
+           // console.log("Produto Criado",produtoCriado);
             self.carregarProdutos();
             self.formProdutos.limparFormulario();
         }
@@ -83,15 +96,15 @@ class ProdutoController{
         );
     }
 
-    carregaFormularioComProduto(id, event){
+    carregaFormularioProduto(id, event){
         event.preventDefault();             
         
         const self = this;
         const ok = function(produto){
-            self.marcaService.buscarMarcas(
-                function(marcas) 
+            self.lojaService.buscarLojas(
+                function(lojas) 
                 { 
-                    self.formProdutos.montarForm(marcas,produto); 
+                    self.formProdutos.montarForm(lojas,produto); 
                 },
                 function(statusCode) {
                     console.log("Erro - status:",statusCode);
@@ -102,7 +115,7 @@ class ProdutoController{
             console.log(status);
         }
 
-        this.produtoService.buscarProduto(id,ok,erro);   
+        this.produtoService.buscarProdutoId(id,ok,erro);   
     }
 
     editar(id,event){

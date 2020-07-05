@@ -17,7 +17,7 @@ class ProdutoService{
         xhttp.send();
     }
 
-    buscarProdutoPorId(id,response,error){
+    buscarProdutoId(id,response,error){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -59,4 +59,24 @@ class ProdutoService{
         xhttp.open("DELETE", this.uri+'/'+id, true);
         xhttp.send();
     }
+
+    enviarProduto(produto, ok, erro){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4){ 
+                if(this.status === 201) {    
+                    ok(JSON.parse(this.responseText))
+                }
+                else {
+                    erro(this.status);
+                }
+            }
+        };
+        xhttp.open("POST", this.uri, true);
+        xhttp.setRequestHeader("Content-Type","application/json");
+        xhttp.send(JSON.stringify(produto));
+        
+    }
+
+
 }

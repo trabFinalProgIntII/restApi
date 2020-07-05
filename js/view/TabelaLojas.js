@@ -8,14 +8,18 @@ class TabelaLojas {
     montarTabela(lojas){
         var str=`
         <h2>Tabela de Lojas</h2>
-        <a id="novo" href="#">Novo</a>
+        <a id="novo" href="#" class="button">Novo</a>
+        <br/>
+        <br/>
         <div id="tabela">
-        <table>
-            <tr>
-                <th style='text-align: left;'>Id</th>
-                <th style='text-align: left;'>Nome</th>
-                <th colspan="2">Ação</th>
-            </tr>`;
+        <table class= 'table'>
+            <tbody class="table-hover">
+                <tr>
+                    <th style='text-align: left;'>Id</th>
+                    <th style='text-align: left;'>Nome</th>
+                    <th class="text-center" colspan="2">Ação</th>
+                </tr>
+            </tbody>`;
     
         for(var i in lojas){
             str+=`<tr id=${lojas[i].id}>

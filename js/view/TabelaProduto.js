@@ -8,16 +8,20 @@ class TabelaProdutos {
     montarTabela(produtos){
         var str=`
         <h2>Tabela de Produtos</h2>
-        <a id="novo" href="#">Novo</a>
+        <a id="novo" href="#" class="button">Novo</a>
+        <br/>
+        <br/>
         <div id="tabela">
-        <table>
-            <tr>
-                <th style='text-align: left;'>Id</th>
-                <th style='text-align: left;'>Nome</th>
-                <th style='text-align: left;'>Preço</th>
-                <th style='text-align: left;'>Marca</th>
-                <th colspan="2">Ação</th>
-            </tr>`;
+        <table class='table'>
+            <tbody class="table-hover">
+                <tr>
+                    <th class="text-left" style='text-align: left;'>Id</th>
+                    <th class="text-left" style='text-align: left;'>Nome</th>
+                    <th class="text-left" style='text-align: left;'>Preço</th>
+                    <th class="text-left" style='text-align: left;'>Loja</th>
+                    <th class="text-center" colspan="2">Ação</th>
+                </tr>
+            </tbody>`;
     
         for(var i in produtos){
             str+=`<tr id=${produtos[i].id}>
@@ -57,7 +61,7 @@ class TabelaProdutos {
         {
             const id = linkEdit.parentNode.parentNode.id;
             //Outra forma de tratar o evento (click) - nesse caso deve ter bind
-            linkEdit.addEventListener("click",this.produtoController.carregaFormularioComProduto.bind(this.produtoController,id));
+            linkEdit.addEventListener("click",this.produtoController.carregaFormularioProduto.bind(this.produtoController,id));
         }
 
     }
